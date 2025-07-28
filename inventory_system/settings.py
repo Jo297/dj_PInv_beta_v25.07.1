@@ -28,8 +28,7 @@ SECRET_KEY = 'django-insecure-@#ltj62&=yd6938)h(5_wigdu-5y04f2gb7-+k5&s)1=w$*^-&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['PersonalInventory-betav25.7.28.onrender.com']
-
+ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME', 'localhost')]
 
 # Application definition
 
