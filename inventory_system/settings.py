@@ -85,7 +85,7 @@ DATABASES = {
     'default': dj_database_url.config(conn_max_age=600)
     }
 
-        """
+"""
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'personal_inventory',
         'USER': 'inventory_user',
