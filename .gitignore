@@ -1,0 +1,32 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+venv/
+env/
+ENV/
+*.egg-info/
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.mo
+*.swp
+*.bak
+media/
+staticfiles/
+local_settings.py
+.env
+
+# IDEs/editors
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head><title>Inventory Items</title></head>
+<body>
+  <h1>Inventory Items</h1>
+
+  <form method="post" action="{% url 'logout' %}">
+  <p>Welcome, {{ user.username }}!</p>
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+  </form>
+  <br/>
+
+  <form method="get">
+    <input type="text" name="q" placeholder="Search items..." value="{{ request.GET.q }}">
+    <button type="submit">Search</button>
+  </form>
+
+  <ul>
+    {% for item in page_obj %}
+      <li>
+        <strong>{{ item.name }}</strong> — Qty: {{ item.quantity }} Category: {{ item.category.name }}
+        (<a href="{% url 'edit_item' item.id %}">Edit</a> |
+        <a href="{% url 'delete_item' item.id %}" onclick="return confirm('Delete this item?');">Delete</a>)
+      </li>
+    {% empty %}
+      <li>No items found.</li>
+    {% endfor %}
+  </ul>
+
+  <div>
+      {% if page_obj.has_previous %}
+          <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">First</a>
+          <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Previous</a>
+      {% endif %}
+
+      <span> Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+      {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Last</a>
+      {% endif %}
+
+
+  </div>
+
+  <p><a href="{% url 'add_item' %}">Add New Item</a></p>
+</body>
+</html>
