@@ -11,6 +11,7 @@ from django.core.paginator import Paginator
 
 # Create your views here.
 from django.contrib.auth.models import User
+import os
 
 if not User.objects.filter(username=os.getenv('DJANGO_ADMIN_USERNAME')).exists():
     User.objects.create_superuser(
@@ -19,7 +20,7 @@ if not User.objects.filter(username=os.getenv('DJANGO_ADMIN_USERNAME')).exists()
         os.getenv('DJANGO_ADMIN_PASSWORD')
     )
 
-    
+
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
