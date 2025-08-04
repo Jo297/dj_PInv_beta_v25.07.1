@@ -22,13 +22,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
+
+IS_RENDER = 'RENDER' in os.environ
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@#ltj62&=yd6938)h(5_wigdu-5y04f2gb7-+k5&s)1=w$*^-&'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-@#ltj62&=yd6938)h(5_wigdu-5y04f2gb7-+k5&s)1=w$*^-&')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = not IS_RENDER
 
-ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME', 'localhost')]
+if IS_RENDER:
+    ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME')]
+else:
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
 
 # Application definition
 
@@ -80,20 +87,21 @@ LOGOUT_REDIRECT_URL = 'login'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600)
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600)
     }
-
-"""
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'personal_inventory',
-        'USER': 'inventory_user',
-        'PASSWORD': 'invuser123',
-        'HOST': 'localhost',
-        'PORT': '5432',
+else:    
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'personal_inventory',
+            'USER': 'inventory_user',
+            'PASSWORD': 'invuser123',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
     }
-}
-"""
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -130,6 +138,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'inventory/static')
+]
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type

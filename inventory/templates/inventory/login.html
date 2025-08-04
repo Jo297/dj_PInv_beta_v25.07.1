@@ -1,13 +1,60 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
-<head><title>Login</title></head>
-<body>
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
-  <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory System | Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'inventory/login.styles.css' %}">
+  </head>
+  <body>
+    <div class="login">
+      <!-----app title to be worked on---->
+
+    <div class="logo">
+      <h1>Inventory System</h1>
+    </div>
+
+    <div class="content">
+
+      <form class="login-form" name="user_login" method="post" >
+        <!-- action="/access_control/auth/login_check"> -->
+          <h3 class="form-title">Login to your account</h3>
+          {% csrf_token %}
+          {{ form.as_p }}
+          <br/>
+          <div class="form-group">
+            <label class="control-label">Username</label>
+            <div class="input-icon">
+              <i class="fa fa-user"></i>
+              <input class="form-control" type="text" autocomplete="off" placeholder="Username" name="_username" value="">
+            </div>
+          </div>
+          <div class="form-group">
+              <label class="control-label">Password</label>
+              <div class="input-icon">
+                  <i class="fa fa-lock"></i>
+                  <input class="form-control" type="password" autocomplete="off" placeholder="Password" name="_password">
+              </div>
+          </div>
+
+          <div class="form-actions">
+              <button type="submit" class="btn btn-circle green pull-right">
+                  Login
+              </button>
+          </div>
+          <div class="register-account forget-password">
+              <p>
+                  <!-- <a href="/access_control/auth/forgot-password" id="forget-password">Forgot your password?</a> -->
+              </p>
+              <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+          </div>
+      </form>
+
+          </div>
+
+          <div class="copyright">
+              2025  © AppName. All Rights Reserved.
+          </div>
+  </body>
 </html>
