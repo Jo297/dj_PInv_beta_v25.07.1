@@ -73,7 +73,7 @@
       }
       
       label{
-        display: none;
+        /*display: none;*/
         font-size: 14px;
         font-weight: 400;
       }
