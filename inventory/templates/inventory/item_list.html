@@ -1,36 +1,51 @@
+{% extends "inventory/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Inventory Items</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'inventory/style.css' %}">
-</head>
-<body>
-  <h1>Inventory Items</h1>
 
-  <p>Welcome, {{ user.username }}!</p>
-  <form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-  </form>
+
+      {% block title %}
+        Inventory Items
+      {% endblock %}
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'inventory/home.styles.css' %}">
+  <div class="itemlist-title-header">
+    Inventory Items
+  </div>
+
   <br/>
 
   <form method="get">
     <input type="text" name="q" placeholder="Search items..." value="{{ request.GET.q }}">
     <button type="submit">Search</button>
   </form>
+  <br/>
+  {% if page_obj %}
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in page_obj %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.category.name }}</td>
+          <td>
+            <a href="{% url 'edit_item' item.id %}">Edit</a> |
+            <a href="{% url 'delete_item' item.id %}" onclick="return confirm('Delete this item?');">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No items found.</p>
+{% endif %}
 
-  <ul>
-    {% for item in page_obj %}
-      <li>
-        <strong>{{ item.name }}</strong> — Qty: {{ item.quantity }} Category: {{ item.category.name }}
-        (<a href="{% url 'edit_item' item.id %}">Edit</a> |
-        <a href="{% url 'delete_item' item.id %}" onclick="return confirm('Delete this item?');">Delete</a>)
-      </li>
-    {% empty %}
-      <li>No items found.</li>
-    {% endfor %}
-  </ul>
 
   <div>
       {% if page_obj.has_previous %}
@@ -49,5 +64,4 @@
   </div>
 
   <p><a href="{% url 'add_item' %}">Add New Item</a></p>
-</body>
-</html>
+ {% endblock %}

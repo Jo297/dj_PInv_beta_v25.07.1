@@ -1,18 +1,7 @@
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <title> Edit Item </title>
-    </head>
-<body>
-    <h2> Welcome, {{ user.username }} </h2>
-    <p>
-        <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button>Logout</button>
-        </form>
-    </p>
-
+{% extends "inventory/base.html" %}
+{% block title %}
+       Edit Item
+{% endblock %}
 
 {% block content %}
   <h2>Edit Item - {{ item.name }}</h2>
@@ -23,6 +12,3 @@
   </form>
   <p><a href="{% url 'home' %}">← Back to Inventory</a></p>
 {% endblock %}
-
-</body>
-</html>

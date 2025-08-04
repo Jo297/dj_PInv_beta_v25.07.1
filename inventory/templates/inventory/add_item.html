@@ -1,29 +1,23 @@
-<!-- inventory/templates/inventory/add_item.html -->
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Add Inventory Item</title>
-    </head>
-    <body>
-        <h1> Add Inventory Item</h1>
-
-            <div>
-                <p> Welcome, {{ user.username }}!</p>
-
-                <p><a href="{% url 'home' %}">Back to Inventory</a></p>
-            </div>
+{% extends "inventory/base.html" %}
+{% load static %}
 
 
+      {% block title %}
+        Add Inventory Item
+      {% endblock %}
+{% block content %}
+    <h1> Add Inventory Item</h1>
+        <div>
+            <p><a href="{% url 'home' %}">Back to Inventory</a></p>
+        </div>
+        <br/>
 
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Add Item</button>
-        </form>
-    </body>
-</html>
-
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Item</button>
+    </form>
+{% endblock %}
 
 
 
