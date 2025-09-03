@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,31 +9,130 @@
         Inventory System | Base
       {% endblock %}
     </title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  rel="stylesheet" /> -->
+    <link rel="stylesheet" href="{% static 'inventory/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'inventory/css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'inventory/css/utilities.css' %}">
+    <link rel="stylesheet" href="{% static 'inventory/css/components.css' %}">
+    <link rel="stylesheet" href="{% static 'inventory/css/main.css' %}">
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Inventory System</a>
-      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button> -->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <!-- <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home</a>
-          </li>
+    <nav>
+      <input type="checkbox" id="sidebar-active">
+      <label for="sidebar-active" class="open-sidebar-button" aria-controls="sidebar" aria-expanded="false">
+        <span class="Button-label"> 
+          <div class="HeaderMenu-toggle-bar rounded my-1"></div>
+          <div class="HeaderMenu-toggle-bar rounded my-1"></div>
+          <div class="HeaderMenu-toggle-bar rounded my-1"></div>
+        </span>
+      </label>
+      
+      <label id="overlay" for="sidebar-active"></label>
+      <div class="links-container">
+        <label for="sidebar-active" class="close-sidebar-button">
+          <div class="closeBtnbox">
+          <div class="sidebar-closeButton-top"></div>
+          <div class="sidebar-closeButton-bottom"></div>
+          </div>
+        </label>
+        
+        <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="{% url 'home' %}">Dashboard</a>
           </li>
-        </ul> -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="#" id="subMenu1Btn">
+              <p>Inventory</p>
+              <span class="arrowIcon"></span></a>
+            <ul class="sideBarsubmenu">
+              <li><a class="nav-link" 
+              href="{% url 'add_item' %}">Create Item</a></li>
+              <li><a class="nav-link" href="#">Search Items</a></li>
+            </ul>
+          </li>
+          <li class="nav-item hidden">
+            <a class="nav-link" href="#">Orders</a>
+          </li>
+          <li class="nav-item hidden">
+            <a class="nav-link" href="#">Reports</a>
+          </li>
+        </ul>
       </div>
-        <div style="align-self: right;">
-            <p>Welcome, {{ user.username }}!</p>
+      
+      <div class="navbarLogo">
+        <a class="navbar-brand" href="{% url 'home' %}">Inventory System</a>
+      </div>
+      <div class="navdropdown-menu-container">
+        <div src="" class="userLogo" id="profileBtn">User</div>
+        <div class="dropdown-menu-wrap" id="dropdownDiv">
+          <div class="dropdown-menu">
+            <div class="user-info">
+              <div class="userinfologo" ></div>
+              <!-- <h3>User Name</h3> -->
+              <h3>{{ user.username }}</h3>
+            </div>
+            <hr>
+            <a class="dropdown-menu-link" href="baseview3.html">
+              <img src=""/>
+              <p>Edit Profile</p>
+              <span>></span>
+            </a>
+            <a class="dropdown-menu-link" href="#">
+              <img src=""/>
+              <p>Settings</p>
+              <span>></span>
+            </a>
             <form method="post" action="{% url 'logout' %}">
-              {% csrf_token %}
-              <button type="submit">Logout</button>
+                {% csrf_token %}
+                <button type="submit" class="dropdown-menu-link">
+                    <img src=""/>
+                    <p>Logout</p>
+                    <span>></span>
+                </button>
             </form>
+          </div>
         </div>
+      </div>
     </nav>
-    <div class="container">{% block content %} {% endblock %}</div>
+    <div class="bodyContent">
+          <div class="card container content">
+          <!--<br/>
+           <div class="mainContentcontainer container">
+                List content
+          </div>
+          <br/> -->
+          {% block content %} {% endblock %}
+          </div>
+          <div>
+          <button class="btn hidden" type="submit">
+            button
+          </button>  
+          </div>
+        </div>
+      <script>
+        let profileBtn = document.getElementById("profileBtn");
+        const dropdownDiv = document.getElementById("dropdownDiv");
+        
+        profileBtn.addEventListener("click", (e) => {
+          dropdownDiv.classList.toggle("open-menu");
+        });
+        // Close if clicking outside
+        document.addEventListener("click", (e) => {
+          if (!dropdownDiv.contains(e.target) && !profileBtn.contains(e.target)) {
+            dropdownDiv.classList.remove("open-menu");
+          }
+          });
+              
+        document.querySelectorAll(".dropdown > .nav-link").forEach(link => {
+          link.addEventListener("click", function(e) {
+            e.preventDefault();
+            const parent = this.parentElement;
+            const submenu = this.nextElementSibling;
+            parent.classList.toggle("open");
+            submenu.classList.toggle("open");
+          });
+        });
+      </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" ></script>
   </body>

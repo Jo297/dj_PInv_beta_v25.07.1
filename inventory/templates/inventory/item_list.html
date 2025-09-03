@@ -15,7 +15,7 @@
 
   <form method="get">
     <input type="text" name="q" placeholder="Search items..." value="{{ request.GET.q }}">
-    <button type="submit">Search</button>
+    <button class="btn" type="submit">Search</button>
   </form>
   <br/>
   {% if page_obj %}
@@ -62,6 +62,4 @@
 
 
   </div>
-
-  <p><a href="{% url 'add_item' %}">Add New Item</a></p>
  {% endblock %}

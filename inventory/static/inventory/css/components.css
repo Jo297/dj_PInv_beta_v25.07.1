@@ -1,0 +1,47 @@
+/* COMPONENTS */
+
+.btn {
+  /* display: flex; */
+  padding: 2px 12px;
+  width: 100px;
+  background-color: #0dac1f;
+  color: #fff;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #12c426;
+}
+
+.btn-cancel {
+  /* display: flex; */
+  padding: 4px 12px;
+  width: 100px;
+  background-color: #e12121;
+  color: #fff;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.btn-cancel:hover {
+  background-color: #e17a7a;
+}
+
+input,select{  
+  border: 1px solid #ddd;
+  padding: 2px 2px;
+  margin: 2px 0px;
+
+}
+
+
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}

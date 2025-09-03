@@ -25,7 +25,7 @@ def add_item(request):
         form = ItemForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('add_item')
+            return redirect('home')
 
     else:
         form = ItemForm()
