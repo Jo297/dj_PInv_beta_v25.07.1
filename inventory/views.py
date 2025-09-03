@@ -7,10 +7,17 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.paginator import Paginator
 # from .forms import ItemForm
-
+import os
+from django.contrib.auth.models import User
 
 # Create your views here.
 
+if not User.objects.filter(username=os.getenv('DJANGO_ADMIN_USERNAME')).exists():
+    User.objects.create_superuser(
+        os.getenv('DJANGO_ADMIN_USERNAME'),
+        os.getenv('DJANGO_ADMIN_EMAIL'),
+        os.getenv('DJANGO_ADMIN_PASSWORD')
+    )
 
 
 class ItemForm(forms.ModelForm):
