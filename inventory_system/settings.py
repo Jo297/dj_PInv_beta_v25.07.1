@@ -90,7 +90,7 @@ LOGOUT_REDIRECT_URL = 'login'
 if 'DATABASE_URL' in os.environ:
     DATABASES = {
         'default': dj_database_url.config(
-            conn_max_age=600,
+            conn_max_age=0,
             ssl_require=True          # Neon requires SSL
             )
     }
